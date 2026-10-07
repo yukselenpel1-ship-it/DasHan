@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS entries (
+  id TEXT PRIMARY KEY,
+  kind TEXT NOT NULL,
+  title TEXT NOT NULL,
+  body TEXT NOT NULL DEFAULT '',
+  status INTEGER NOT NULL DEFAULT 0,
+  date TEXT NOT NULL DEFAULT '',
+  url TEXT NOT NULL DEFAULT '',
+  amount DOUBLE PRECISION NOT NULL DEFAULT 0,
+  priority TEXT NOT NULL DEFAULT 'normal',
+  created TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS entries_created_idx ON entries (created DESC);
+CREATE TABLE IF NOT EXISTS private_notes (
+  user_id TEXT PRIMARY KEY,
+  version INTEGER NOT NULL,
+  salt TEXT NOT NULL,
+  iv TEXT NOT NULL,
+  ciphertext TEXT NOT NULL,
+  revision INTEGER NOT NULL DEFAULT 1,
+  updated TEXT NOT NULL
+);

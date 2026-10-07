@@ -1,20 +1,21 @@
+import {isSameOrigin} from "@/lib/request-origin";
 import {z} from "zod";
-import {getChatGPTUser} from "@/app/chatgpt-auth";
+import {getWorkspaceUser} from "@/lib/session";
 import {db} from "@/lib/server";
 
 const payload=z.object({version:z.literal(1),salt:z.string().regex(/^[A-Za-z0-9+/]{22}==$/),iv:z.string().regex(/^[A-Za-z0-9+/]{16}$/),ciphertext:z.string().min(24).max(550000).regex(/^[A-Za-z0-9+/]+={0,2}$/),revision:z.number().int().min(0)}).strict();
 const reply=(body:unknown,status=200)=>Response.json(body,{status,headers:{"Cache-Control":"no-store"}});
 export async function GET(){
  try{
-  const user=await getChatGPTUser();if(!user)return reply({error:"Özel alan için hesabınla giriş yap."},401);
+  const user=await getWorkspaceUser();if(!user)return reply({error:"Özel alan için hesabınla giriş yap."},401);
   const note=await db().prepare("SELECT version,salt,iv,ciphertext,revision,updated FROM private_notes WHERE user_id=?").bind(user.userId).first();
   return reply({note});
  }catch{return reply({error:"Özel alan yüklenemedi. Yeniden dene."},503);}
 }
 export async function PUT(request:Request){
  try{
-  const user=await getChatGPTUser();if(!user)return reply({error:"Özel alan için hesabınla giriş yap."},401);
-  if(request.headers.get("origin")!==new URL(request.url).origin)return reply({error:"Bu istek kabul edilmedi."},403);
+  const user=await getWorkspaceUser();if(!user)return reply({error:"Özel alan için hesabınla giriş yap."},401);
+  if(!isSameOrigin(request))return reply({error:"Bu istek kabul edilmedi."},403);
   if(Number(request.headers.get("content-length"))>560000)return reply({error:"Notun çok uzun."},413);
   const raw=await request.text();if(raw.length>560000)return reply({error:"Notun çok uzun."},413);
   const value=payload.parse(JSON.parse(raw));

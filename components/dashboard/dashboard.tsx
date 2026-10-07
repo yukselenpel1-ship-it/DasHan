@@ -1,4 +1,5 @@
 "use client";
+import {upload as uploadBlob} from "@vercel/blob/client";
 import {useEffect,useState,useRef,useCallback} from "react";
 import {Network,LayoutGrid,CheckCheck,CalendarDays,NotebookPen,FolderOpen,Wallet,Link2,Plus,Minus,Maximize,Orbit,SlidersHorizontal,ChevronRight,Send,Sparkles,LoaderCircle,Trash2,Check,ArrowUpRight,Upload,RefreshCw,Pencil,X,LockKeyhole,Home,Bell,ChevronDown,LogIn} from "lucide-react";
 import NetworkGraph from "./network-graph";
@@ -55,7 +56,7 @@ export default function Dashboard({account}:{account:AccountContext}){
   finally{chatWorking.current=false;setBusy(false);}
  }
 
- async function upload(f:File){setSaving(true);const form=new FormData();form.append("file",f);try{await api("/api/files","POST",form);await refresh();toast.success("Dosya yüklendi.");}catch(e){toast.error((e as Error).message);}finally{setSaving(false);if(fileInput.current)fileInput.current.value="";}}
+ async function upload(f:File){if(!f.size||f.size>10*1024*1024){toast.error("En fazla 10 MB büyüklüğünde bir dosya seç.");return;}setSaving(true);try{const user=account.user;if(!user)throw new Error("Önce giriş yap.");const path=`files/${account.userId}/${crypto.randomUUID()}`;const blob=await uploadBlob(path,f,{access:"private",handleUploadUrl:"/api/files/upload",multipart:f.size>4*1024*1024});await api("/api/files","POST",{pathname:blob.pathname,title:f.name.slice(0,200)});await refresh();toast.success("Dosya yüklendi.");}catch(e){toast.error((e as Error).message);}finally{setSaving(false);if(fileInput.current)fileInput.current.value="";}}
  const newEntry=()=>selected==="files"?fileInput.current?.click():setDraft(fresh(selected==="core"?"tasks":selected));
  return <main className="dashhan"><Toaster theme="dark" position="top-center"/><header className="topbar reference-topbar">
   <svg className="topbar-orbit" viewBox="0 0 400 200" fill="none" aria-hidden="true"><circle cx="200" cy="100" r="94"/><ellipse cx="200" cy="100" rx="48" ry="94"/><ellipse cx="200" cy="100" rx="94" ry="34"/><path d="M106 100h188M200 6v188"/></svg>

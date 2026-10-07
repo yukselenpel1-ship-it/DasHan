@@ -1,0 +1,10 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "pnpm build",
+  "functions": {
+    "app/api/ai/route.ts": {
+      "maxDuration": 60
+    }
+  },
+  "installCommand": "npx --yes pnpm@11.25.0 install --frozen-lockfile"
+}

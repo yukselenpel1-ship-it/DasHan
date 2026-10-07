@@ -326,3 +326,5 @@
   .account-pane[data-state="active"],.search-results{animation:none!important}
   [data-slot="dialog-content"]>[data-slot="dialog-close"]:hover{transform:none}
 }
+
+.workspace-access{min-height:100dvh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at top,#24463366,transparent 65%),#030d0b}.access-card{width:min(100%,440px);display:grid;justify-items:center;gap:18px;text-align:center;padding:40px 28px;border:1px solid #b7cfa633;border-radius:24px;background:#0b1d16bb;box-shadow:0 24px 90px #0005}.access-card>img{object-fit:contain}.access-card h1{font-size:36px;margin:0}.access-card>p{margin:0;line-height:1.8;color:#a2b99f}.access-card>.account-action{width:100%}
