@@ -1,0 +1,165 @@
+/* DashHAN adaptation of LINEAR-DESIGN.md: glass and spatial motion are intentional extensions. */
+:root {
+  --background: #010102;
+  --foreground: #f7f8f8;
+  --card: #101114;
+  --card-foreground: #f7f8f8;
+  --popover: #18191d;
+  --popover-foreground: #f7f8f8;
+  --primary: #5e6ad2;
+  --primary-foreground: #ffffff;
+  --secondary: #202127;
+  --secondary-foreground: #d0d6e0;
+  --muted: #18191d;
+  --muted-foreground: #8a8f98;
+  --accent: #282a33;
+  --accent-foreground: #f7f8f8;
+  --border: #23252a;
+  --input: #343641;
+  --ring: #828fff;
+  --sidebar: #0b0c10;
+  --sidebar-foreground: #d0d6e0;
+  --sidebar-primary: #828fff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #202127;
+  --sidebar-accent-foreground: #f7f8f8;
+  --sidebar-border: #23252a;
+  --sidebar-ring: #828fff;
+  --glass: rgba(16, 17, 23, .82);
+  --glass-border: rgba(208, 214, 224, .13);
+  --glass-shadow: 0 24px 64px #0005, inset 0 1px rgba(255,255,255,.055);
+}
+.dashhan {
+  background: radial-gradient(ellipse at 55% 42%, #5e6ad212, transparent 55%), var(--background);
+  color: var(--foreground);
+}
+.dashhan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(#ffffff03 1px, transparent 1px), linear-gradient(90deg,#ffffff03 1px,transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+  z-index: -1;
+}
+.reference-topbar {
+  background: rgba(11,12,16,.88);
+  border-bottom: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow: inset 0 1px #ffffff05;
+}
+.reference-topbar::before, .reference-topbar::after { background: none; box-shadow: none; border-color: transparent; }
+.reference-topbar .brand { font-weight: 600; letter-spacing: -.8px; }
+.reference-topbar .gold { color: #f7f8f8; }
+.reference-topbar .brand-symbol {
+  border: 1px solid var(--glass-border);
+  background: #18191d;
+  box-shadow: inset 0 1px #ffffff0a;
+}
+.reference-topbar .brand small, .reference-topbar .top-context-caption { color: var(--muted-foreground); letter-spacing: .5px; }
+.reference-topbar .top-command, .reference-topbar .topbar-search.search-open .top-command {
+  background: #18191d;
+  border: 1px solid #343641;
+  border-radius: 8px;
+  box-shadow: inset 0 1px #ffffff05;
+}
+.reference-topbar .top-command:focus-within { border-color: var(--ring); box-shadow: 0 0 0 3px #5e6ad22b; }
+.reference-topbar .top-command input { color: var(--foreground); }
+.reference-topbar .top-command input::placeholder { color: #8a8f98; }
+.reference-topbar .top-command > svg, .reference-topbar .top-breadcrumb .top-home { color: #828fff; }
+.reference-topbar .top-notifications, .reference-topbar .settings-button, .reference-topbar .avatar {
+  background: #18191d;
+  border: 1px solid var(--glass-border);
+  color: #d0d6e0;
+  box-shadow: none;
+  border-radius: 8px;
+}
+.reference-topbar .new-button, .primary-button, .account-action {
+  background: var(--primary);
+  border: 1px solid #828fff55;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: inset 0 1px #ffffff15, 0 4px 16px #5e6ad21a;
+}
+.reference-topbar .new-button:hover, .primary-button:hover, .account-action:hover { background: #727ee5; color: #fff; }
+.account-action-secondary { background: #202127; color: #d0d6e0; border-color: #343641; box-shadow: none; }
+.account-action-secondary:hover { background: #282a33; }
+.rail { background: rgba(11,12,16,.91); border-color: var(--glass-border); backdrop-filter: blur(18px); }
+.rail button { color: #8a8f98; transition: background .2s, color .2s, transform .2s, border-color .2s; }
+.rail button.active { background: #5e6ad21c; border-color: #5e6ad24a; color: #a6afff; }
+.rail button.active::before { background: #828fff; }
+.rail button:hover { background: #202127; color: #f7f8f8; }
+.today-panel, .focus-panel, .command-deck, .map-tools, .search-results, .access-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(24px) saturate(115%);
+  backdrop-filter: blur(24px) saturate(115%);
+  border-radius: 12px;
+}
+.today-panel, .focus-panel, .command-deck { transition: border-color .25s, box-shadow .25s; }
+.today-panel:hover, .focus-panel:hover, .command-deck:focus-within { border-color: #5e6ad250; box-shadow: var(--glass-shadow), 0 0 24px #5e6ad209; }
+.map-caption h1 { font-size: 22px; font-weight: 600; letter-spacing: -.6px; color: #f7f8f8; }
+.eyebrow, .panel-index { color: #8a8f98; letter-spacing: 1px; }
+.focus-panel h2 { font-weight: 500; color: #f7f8f8; }
+.panel-subtitle, .subtle, .entry-text small, .empty-state p, .map-caption p, .map-hint { color: #8a8f98; }
+.entry-text strong, .deck-header > span:first-child, .date-number { color: #f7f8f8; }
+.date-number { font-weight: 500; }
+.progress-track { background: #282a33; }
+.progress-track i { background: #828fff; box-shadow: 0 0 12px #5e6ad244; }
+.live-dot, .deck-stats i { background: #27a644; box-shadow: 0 0 8px #27a64433; }
+.gemini-badge { background: #5e6ad214; border-color: #5e6ad233; color: #a6afff; }
+.command-form { background: #18191d; border-color: #343641; color: #d0d6e0; box-shadow: inset 0 1px #ffffff05; }
+.command-form:focus-within { border-color: #828fff; box-shadow: 0 0 0 3px #5e6ad21c; }
+.command-form input { color: #f7f8f8; }
+.command-form input::placeholder { color: #8a8f98; }
+.command-form button { background: #5e6ad2; color: #fff; }
+.command-star, .insight-box, .deck-header svg, .text-button, .map-tools button.lit { color: #a6afff; }
+.quick-prompts button, .add-entry, .empty-state button { background: #202127; border-color: #343641; color: #d0d6e0; border-radius: 8px; }
+.quick-prompts button:hover, .add-entry:hover, .empty-state button:hover { background: #282a33; border-color: #5e6ad255; }
+.record-dialog, .account-dialog, .private-area-dialog {
+  background: rgba(20,21,28,.96) !important;
+  border: 1px solid #454854 !important;
+  color: #f7f8f8;
+  border-radius: 16px !important;
+  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
+}
+.account-brand { background: #5e6ad214; border-color: #5e6ad24a; color: #a6afff; box-shadow: none; }
+.account-tabs [data-slot="tabs-list"] { background: #101114; border-color: #343641; }
+.account-tabs [data-slot="tabs-trigger"][data-state="active"] { background: #282a33; color: #f7f8f8; }
+.record-form input, .record-form textarea, .private-note { background: #101114; border-color: #343641; color: #f7f8f8; }
+.record-form input:focus, .record-form textarea:focus, .private-note:focus { border-color: #828fff; }
+:is([data-slot="dialog-overlay"],[data-slot="alert-dialog-overlay"]) { background: #010102ad; }
+:is([data-slot="dialog-content"],[data-slot="alert-dialog-content"])::before { background: linear-gradient(90deg, transparent,#828fff99,transparent); box-shadow: 0 0 14px #5e6ad244; }
+:is(button,a,input,textarea,[data-slot="select-trigger"]):focus-visible { outline: 2px solid #828fff; outline-offset: 3px; }
+.reference-topbar button:focus-visible { outline-color: #828fff; }
+.workspace-access { background: radial-gradient(ellipse at top,#5e6ad21a,transparent 65%),#010102; }
+/* Entrance depth complements the interactive 3D canvas, without moving form hit targets. */
+.dashhan[data-motion="true"] :is(.today-panel,.focus-panel,.command-deck) { animation: linear-panel-in .65s cubic-bezier(.16,1,.3,1) both; }
+.dashhan[data-motion="true"] .focus-panel { animation-delay: .08s; }
+.dashhan[data-motion="true"] .command-deck { animation-delay: .16s; }
+@keyframes linear-panel-in {
+  from { opacity: 0; transform: perspective(1200px) translateY(14px) rotateX(3deg); }
+  to { opacity: 1; transform: none; }
+}
+@media (hover:hover) and (pointer:fine) {
+  .rail button:hover { transform: translateY(-2px); }
+  .dashhan[data-motion="false"] .rail button:hover { transform: none; }
+}
+@media (max-width:1000px) {
+  .rail { padding-bottom: max(9px,env(safe-area-inset-bottom)); height: calc(68px + env(safe-area-inset-bottom)); }
+  .dashhan { padding-bottom: calc(82px + env(safe-area-inset-bottom)); }
+  .rail button { min-width: 36px; min-height: 44px; }
+}
+@media (max-width:620px) {
+  .map-caption h1 { font-size: 18px; }
+  .map-tools button { min-height: 40px; }
+  .command-form { min-height: 52px; }
+  .record-form input, .record-form textarea { font-size: 16px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .rail button:hover { transform: none; }
+}
